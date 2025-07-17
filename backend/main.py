@@ -122,8 +122,8 @@ app = web.Application(middlewares=[cors_middleware])
 app.on_shutdown.append(on_shutdown)
 
 # 静的ファイル配信を追加
-app.router.add_static("/", "./client/dist/", show_index=True)
-app.router.add_post("/offer", offer)
+# app.router.add_static("/", "./client/dist/", show_index=True)
+app.router.add_post("/kaojanken", offer)
 
 if __name__ == "__main__":
     web.run_app(app, host="0.0.0.0", port=8080)

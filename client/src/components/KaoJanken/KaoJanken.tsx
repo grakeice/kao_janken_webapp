@@ -41,7 +41,7 @@ export const KaoJanken = (): JSX.Element => {
 			// statusSpan.textContent = "Offer created. Sending to server...";
 
 			// PythonサーバーにOfferを送信
-			const response = await fetch("http://0.0.0.0:8080/offer", {
+			const response = await fetch("http://127.0.0.1:8080/kaojanken", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({

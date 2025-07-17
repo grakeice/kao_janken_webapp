@@ -8,11 +8,20 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"client": "npm --workspace=client"
+		"client": "npm --workspace=client",
+		"start": "npx tsx index.ts"
 	},
 	"workspaces": {
 		"packages": [
 			"./client/"
 		]
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.16.0",
+		"hono": "^4.8.5",
+		"zx": "^8.7.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.1.2"
 	}
 }
