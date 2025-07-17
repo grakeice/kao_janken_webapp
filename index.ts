@@ -9,24 +9,27 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import "zx/globals";
+import "dotenv/config";
 import { serveStatic } from "@hono/node-server/serve-static";
 
 console.log("---");
 await $`npm run client run build`.verbose();
 console.log("---");
 
+const backend = $`uv run ./backend/main.py`.verbose();
+
+const HOST = String(process.env.CLIENT_HOST || "127.0.0.1");
+const PORT = parseInt(process.env.CLIENT_PORT || "3000");
 
 const app = new Hono();
 app.use(logger());
 
 app.get("*", serveStatic({ root: "./client/dist/" }));
 
-serve({ fetch: app.fetch, port: 3000 }, (info) => {
-	console.log(`App is now served on http://127.0.0.1:${info.port}`);
-	console.log("---")
+serve({ fetch: app.fetch, hostname: HOST, port: PORT }, (info) => {
+	console.log(`App is now served on http://${info.address}:${info.port}`);
+	console.log("---");
 });
-
-const backend = $`uv run ./backend/main.py`.verbose();
 
 process.on("SIGINT", () => {
 	backend.kill();

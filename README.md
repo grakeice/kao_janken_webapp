@@ -10,6 +10,13 @@
 以下を実行してください
 
 ```sh
-npm install
-uv sync
+npm run setup
+```
+
+## アプリケーションの実行
+
+以下を実行してください
+
+```sh
+npm run start
 ```

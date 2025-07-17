@@ -13,6 +13,8 @@ export const KaoJanken = (): JSX.Element => {
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
 	let pc: RTCPeerConnection;
+	const apiPort = import.meta.env.VITE_API_PORT || "8080";
+	const apiHost = import.meta.env.VITE_API_HOST || "127.0.0.1";
 	const handleButtonClick = async () => {
 		if (!pc) pc = new RTCPeerConnection();
 		pc.ontrack = (event) => {
@@ -41,7 +43,7 @@ export const KaoJanken = (): JSX.Element => {
 			// statusSpan.textContent = "Offer created. Sending to server...";
 
 			// PythonサーバーにOfferを送信
-			const response = await fetch("http://127.0.0.1:8080/kaojanken", {
+			const response = await fetch(`http://${apiHost}:${apiPort}/kaojanken`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -63,7 +65,6 @@ export const KaoJanken = (): JSX.Element => {
 			// pc = null;
 			// startButton.disabled = false;
 		}
-
 	};
 	return (
 		<div>

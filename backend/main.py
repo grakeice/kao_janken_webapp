@@ -2,12 +2,19 @@ import asyncio
 import json
 import logging
 import uuid
+import os
 
 import cv2
 from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ルートディレクトリとロガーの設定
+HOST = os.getenv("VITE_API_HOST", "127.0.0.1")
+PORT = int(os.getenv("VITE_API_PORT", 8080))
+
 ROOT = "."
 logging.basicConfig(level=logging.INFO)
 pcs = set()  # PeerConnectionを保持するセット
@@ -126,4 +133,4 @@ app.on_shutdown.append(on_shutdown)
 app.router.add_post("/kaojanken", offer)
 
 if __name__ == "__main__":
-    web.run_app(app, host="0.0.0.0", port=8080)
+    web.run_app(app, host=HOST, port=PORT)
