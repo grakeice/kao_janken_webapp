@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"[python]": {
+			"editor.defaultFormatter": "charliermarsh.ruff"
+		}
+	}
+}
