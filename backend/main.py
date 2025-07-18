@@ -1,3 +1,10 @@
+"""
+Copyright (c) 2025 grakeice
+
+This software is released under the MIT License.
+https://opensource.org/licenses/MIT
+"""
+
 import asyncio
 import json
 import logging
@@ -7,7 +14,6 @@ import os
 from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from dotenv import load_dotenv
-import cv2
 from face_mesh import FaceLandMarks
 
 load_dotenv()

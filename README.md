@@ -21,3 +21,11 @@ pnpm sync
 ```sh
 pnpm start
 ```
+
+## ライセンス
+
+Copyright (c) 2025 grakeice.
+
+This software is released under the MIT License.
+
+詳しくは[`LICENSE`](./LICENSE), [`NOTICE.md`](./NOTICE.md)を参照してください。
