@@ -8,9 +8,10 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"client": "npm --workspace=client",
-		"setup": "npm install; uv sync;",
-		"start": "npx tsx index.ts"
+		"client": "pnpm --filter client",
+		"sync": "pnpm install; uv sync;",
+		"start": "pnpx tsx index.ts",
+		"server": "uv run ./backend/main.py"
 	},
 	"workspaces": {
 		"packages": [
@@ -24,6 +25,13 @@
 		"zx": "^8.7.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.1.2"
+		"@biomejs/biome": "^2.1.2",
+		"@types/node": "^24.0.14",
+		"typescript": "~5.8.3"
+	},
+	"packageManager": "pnpm@10.13.1",
+	"engines": {
+		"pnpm": ">=10.13.1",
+		"npm": "please_use_pnpm_instead"
 	}
 }

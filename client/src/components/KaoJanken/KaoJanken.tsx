@@ -7,7 +7,7 @@
 
 import { type JSX, useRef } from "react";
 import { cameraService } from "../../core";
-// import styles from "./KaoJanken.module.css";
+import styles from "./KaoJanken.module.css";
 
 export const KaoJanken = (): JSX.Element => {
 	const localVideoRef = useRef<HTMLVideoElement>(null);
@@ -29,8 +29,8 @@ export const KaoJanken = (): JSX.Element => {
 		};
 		const stream = await cameraService.start({
 			video: {
-				width: 300,
-				height: 300,
+				width: 700,
+				height: 700,
 			},
 			audio: false,
 		});
@@ -62,8 +62,6 @@ export const KaoJanken = (): JSX.Element => {
 		} catch (e) {
 			alert("Signaling failed: " + e);
 			pc.close();
-			// pc = null;
-			// startButton.disabled = false;
 		}
 	};
 	return (
@@ -72,10 +70,10 @@ export const KaoJanken = (): JSX.Element => {
 			<button type="button" onClick={handleButtonClick}>
 				start
 			</button>
-			<video ref={localVideoRef} autoPlay>
+			<video className={styles.video} ref={localVideoRef} autoPlay>
 				<track kind="captions" default />
 			</video>
-			<video ref={remoteVideoRef} autoPlay>
+			<video className={styles.video} ref={remoteVideoRef} autoPlay>
 				<track kind="captions" default />
 			</video>
 		</div>

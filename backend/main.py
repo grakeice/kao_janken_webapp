@@ -4,10 +4,11 @@ import logging
 import uuid
 import os
 
-import cv2
 from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from dotenv import load_dotenv
+import cv2
+from face_mesh import FaceLandMarks
 
 load_dotenv()
 
@@ -31,6 +32,7 @@ class VideoTransformTrack(MediaStreamTrack):
     def __init__(self, track):
         super().__init__()
         self.track = track
+        self.face_land_mark = FaceLandMarks()
 
     async def recv(self):
         # 元のトラックからフレームを受信
@@ -40,10 +42,8 @@ class VideoTransformTrack(MediaStreamTrack):
         img = frame.to_ndarray(format="bgr24")
 
         # --- ここでOpenCVを使った画像処理を行う ---
-        # 例: グレースケールに変換
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # グレースケール画像を3チャンネルのBGRに戻す（WebRTCはBGRを期待するため）
-        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+        self.face_land_mark.find_face_keypoints(img)
+        img = self.face_land_mark.draw(img)
         # ------------------------------------
 
         # 加工後のndarrayをVideoFrameに戻して返す
