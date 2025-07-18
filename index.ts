@@ -19,7 +19,7 @@ console.log("---");
 const backend = $`uv run ./backend/main.py`.verbose();
 
 const HOST = String(process.env.CLIENT_HOST || "127.0.0.1");
-const PORT = parseInt(process.env.CLIENT_PORT || "3000");
+const PORT = Number(process.env.CLIENT_PORT || "3000");
 
 const app = new Hono();
 app.use(logger());
