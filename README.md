@@ -26,6 +26,9 @@ pnpm sync
 pnpm start
 ```
 
+> [!tip] ポート番号について
+> [`.env`](.env)から編集できます。
+
 ## ライセンス
 
 Copyright (c) 2025 grakeice.
