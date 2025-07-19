@@ -13,7 +13,7 @@ import "dotenv/config";
 import { serveStatic } from "@hono/node-server/serve-static";
 
 console.log("---");
-await $`npm run client run build`.verbose();
+await $`pnpm client build`.verbose();
 console.log("---");
 
 const backend = $`uv run ./backend/main.py`.verbose();
