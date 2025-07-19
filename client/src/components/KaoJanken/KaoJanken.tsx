@@ -5,77 +5,104 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { type JSX, useRef } from "react";
+import { type JSX, useRef, useState } from "react";
 import { cameraService } from "../../core";
 import styles from "./KaoJanken.module.css";
+import { WebRTCConnection } from "./utils";
 
-export const KaoJanken = (): JSX.Element => {
+export function KaoJanken(): JSX.Element {
+	const pc = new RTCPeerConnection();
+	const apiHost = String(import.meta.env.VITE_API_HOST || "127.0.0.1");
+	const apiPort = Number(import.meta.env.VITE_API_PORT || "8080");
+
+	const [gesture, setGesture] = useState("unknown");
+	const [displayMesh, setDisplayMesh] = useState(true);
+
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
-	let pc: RTCPeerConnection;
-	const apiPort = import.meta.env.VITE_API_PORT || "8080";
-	const apiHost = import.meta.env.VITE_API_HOST || "127.0.0.1";
-	const handleButtonClick = async () => {
-		if (!pc) pc = new RTCPeerConnection();
-		pc.ontrack = (event) => {
-			// statusSpan.textContent = "Receiving processed stream...";
-			// リモートビデオにストリームを設定
-			if (remoteVideoRef.current) {
-				if (remoteVideoRef.current.srcObject !== event.streams[0]) {
-					remoteVideoRef.current.srcObject = event.streams[0];
-					console.log("Received remote stream");
-				}
-			}
-		};
+
+	const handleStartButtonClick = async () => {
 		const stream = await cameraService.start({
 			video: {
-				width: 700,
-				height: 700,
+				width: 1080,
+				height: 1080,
 			},
 			audio: false,
 		});
-		if (localVideoRef.current) cameraService.render(localVideoRef.current);
-		stream?.getTracks().forEach((track) => pc.addTrack(track, stream));
-		try {
-			// Offerを作成
-			const offer = await pc.createOffer();
-			await pc.setLocalDescription(offer);
-			// statusSpan.textContent = "Offer created. Sending to server...";
 
-			// PythonサーバーにOfferを送信
-			const response = await fetch(`http://${apiHost}:${apiPort}/kaojanken`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					sdp: offer.sdp,
-					type: offer.type,
-				}),
-			});
+		const rtcConnection = new WebRTCConnection({
+			pc,
+			stream,
+			remoteVideoDisplayTarget: remoteVideoRef.current,
+			apiUrl: `http://${apiHost}:${apiPort}/kaojanken`,
+		});
 
-			// サーバーからAnswerを受信
-			const answer = await response.json();
-			// statusSpan.textContent = "Answer received. Connecting...";
-
-			// Answerを設定して接続を確立
-			await pc.setRemoteDescription(answer);
-			// statusSpan.textContent = "Connected!";
-		} catch (e) {
-			alert("Signaling failed: " + e);
-			pc.close();
+		if (localVideoRef.current) {
+			cameraService.render(localVideoRef.current);
 		}
+		if (remoteVideoRef.current) {
+			rtcConnection.makeConnection();
+		}
+
+		const socket = new WebSocket(`ws://${apiHost}:${apiPort}/ws_janken`);
+
+		socket.addEventListener("open", () => {
+			console.log("connected to server");
+		});
+
+		socket.addEventListener("message", (event) => {
+			const data = JSON.parse(event.data) as {
+				timestamp: number;
+				results: {
+					gesture: "gu" | "choki" | "pa" | "unknown";
+					status: string;
+				}[];
+			};
+			setGesture(data.results[0].gesture);
+		});
+
+		const interval = setInterval(() => {
+			socket.send("");
+		}, 100);
+
+		socket.addEventListener("close", () => {
+			clearInterval(interval);
+		});
 	};
+
+	const handleToggleMeshButtonClick = () => {
+		if (displayMesh) setDisplayMesh(false);
+		else setDisplayMesh(true);
+	};
+
 	return (
 		<div>
 			<h1>KaoJanken</h1>
-			<button type="button" onClick={handleButtonClick}>
-				start
-			</button>
-			<video className={styles.video} ref={localVideoRef} autoPlay>
+			<p>あなたの出した顔: {gesture}</p>
+			<video
+				className={styles.video}
+				ref={localVideoRef}
+				hidden={displayMesh}
+				autoPlay
+			>
 				<track kind="captions" default />
 			</video>
-			<video className={styles.video} ref={remoteVideoRef} autoPlay>
+			<video
+				className={styles.video}
+				ref={remoteVideoRef}
+				hidden={!displayMesh}
+				autoPlay
+			>
 				<track kind="captions" default />
 			</video>
+			<p>
+				<button type="button" onClick={handleStartButtonClick}>
+					start
+				</button>
+				<button type="button" onClick={handleToggleMeshButtonClick}>
+					Face Mesh: {displayMesh ? "on" : "off"}
+				</button>
+			</p>
 		</div>
 	);
-};
+}

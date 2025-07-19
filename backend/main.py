@@ -27,6 +27,29 @@ logging.basicConfig(level=logging.INFO)
 pcs = set()  # PeerConnectionを保持するセット
 
 
+def estimate_gesture(mouth):
+    """
+    Calculate the distance between the mouth keypoints and determine the janken gesture.
+    """
+    distance_0_17 = (
+        (mouth[0][0] - mouth[17][0]) ** 2 + (mouth[0][1] - mouth[17][1]) ** 2
+    ) ** 0.5
+    distance_78_308 = (
+        (mouth[78][0] - mouth[308][0]) ** 2 + (mouth[78][1] - mouth[308][1]) ** 2
+    ) ** 0.5
+    ratio = distance_0_17 / distance_78_308
+    if ratio < 0.5:
+        janken = "gu"
+    elif ratio > 1.5:
+        janken = "choki"
+    elif 0.5 <= ratio <= 1.5:
+        janken = "pa"
+    else:
+        janken = "unknown"
+    put_str = f"distance vertical:{distance_0_17:5.1f}, horizontal:{distance_78_308:5.1f}, ratio:{ratio:4.2f} ({janken})"
+    return put_str, janken
+
+
 # OpenCVで加工するための動画トラッククラス
 class VideoTransformTrack(MediaStreamTrack):
     """
@@ -35,28 +58,67 @@ class VideoTransformTrack(MediaStreamTrack):
 
     kind = "video"
 
-    def __init__(self, track):
+    def __init__(self, track, data_channel=None):
         super().__init__()
         self.track = track
-        self.face_land_mark = FaceLandMarks()
+        self.detector = FaceLandMarks()
+        self.data_channel = data_channel  # 追加
+        # じゃんけん結果をグローバルで保持
+        global latest_janken_result
 
     async def recv(self):
+        global latest_janken_result
         # 元のトラックからフレームを受信
         frame = await self.track.recv()
-
         # フレームをOpenCVで扱えるndarray形式に変換
         img = frame.to_ndarray(format="bgr24")
-
+        janken_statuses = []
         # --- ここでOpenCVを使った画像処理を行う ---
-        self.face_land_mark.find_face_keypoints(img)
-        img = self.face_land_mark.draw(img)
+        self.detector.find_face_keypoints(img)
+        self.detector.find_face_keypoints(img)
+        for face in self.detector.faces:
+            janken_statuses.append(estimate_gesture(face))
+        img = self.detector.draw(img)
         # ------------------------------------
+
+        # 最新のじゃんけん結果をグローバル変数に保存
+        latest_janken_result = {
+            "timestamp": frame.pts,
+            "results": [
+                {"status": status[0], "gesture": status[1]}
+                for status in janken_statuses
+            ],
+        }
 
         # 加工後のndarrayをVideoFrameに戻して返す
         new_frame = frame.from_ndarray(img, format="bgr24")
         new_frame.pts = frame.pts
         new_frame.time_base = frame.time_base
         return new_frame
+
+
+# --- WebSocketでじゃんけん結果を送信するエンドポイント ---
+latest_janken_result = {"timestamp": None, "results": []}  # グローバルで最新結果を保持
+
+
+async def websocket_janken(request):
+    ws = web.WebSocketResponse()
+    await ws.prepare(request)
+    logging.info("WebSocket connection established for janken result")
+
+    try:
+        async for msg in ws:
+            if msg.type == web.WSMsgType.TEXT:
+                # クライアントから何か受信したら最新のじゃんけん結果を送信
+                ws_data = json.dumps(latest_janken_result)
+                await ws.send_str(ws_data)
+            elif msg.type == web.WSMsgType.ERROR:
+                logging.error(f"WebSocket error: {ws.exception()}")
+    except Exception as e:
+        logging.error(f"WebSocket exception: {e}")
+    finally:
+        logging.info("WebSocket connection closed for janken result")
+    return ws
 
 
 # クライアントとの接続処理を行う関数
@@ -75,7 +137,6 @@ async def offer(request):
     def on_track(track):
         logging.info(f"Track {track.kind} received")
         if track.kind == "video":
-            # 加工用トラックを作成し、コネクションに追加
             local_video = VideoTransformTrack(track)
             pc.addTrack(local_video)
 
@@ -137,6 +198,7 @@ app.on_shutdown.append(on_shutdown)
 # 静的ファイル配信を追加
 # app.router.add_static("/", "./client/dist/", show_index=True)
 app.router.add_post("/kaojanken", offer)
+app.router.add_get("/ws_janken", websocket_janken)
 
 if __name__ == "__main__":
     web.run_app(app, host=HOST, port=PORT)
