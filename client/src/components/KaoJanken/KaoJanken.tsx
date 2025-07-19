@@ -15,8 +15,8 @@ export function KaoJanken(): JSX.Element {
 	const apiHost = String(import.meta.env.VITE_API_HOST || "127.0.0.1");
 	const apiPort = Number(import.meta.env.VITE_API_PORT || "8080");
 
-	const [gesture, setGesture] = useState("unknown");
-	const [displayMesh, setDisplayMesh] = useState(true);
+	const [currentGesture, setCurrentGesture] = useState("unknown");
+	const [displayMeshToggle, setDisplayMeshToggle] = useState(true);
 
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -37,12 +37,8 @@ export function KaoJanken(): JSX.Element {
 			apiUrl: `http://${apiHost}:${apiPort}/kaojanken`,
 		});
 
-		if (localVideoRef.current) {
-			cameraService.render(localVideoRef.current);
-		}
-		if (remoteVideoRef.current) {
-			rtcConnection.makeConnection();
-		}
+		if (localVideoRef.current) cameraService.render(localVideoRef.current);
+		if (remoteVideoRef.current) rtcConnection.makeConnection();
 
 		const socket = new WebSocket(`ws://${apiHost}:${apiPort}/ws_janken`);
 
@@ -58,7 +54,7 @@ export function KaoJanken(): JSX.Element {
 					status: string;
 				}[];
 			};
-			setGesture(data.results[0].gesture);
+			setCurrentGesture(data.results[0].gesture);
 		});
 
 		const interval = setInterval(() => {
@@ -71,18 +67,18 @@ export function KaoJanken(): JSX.Element {
 	};
 
 	const handleToggleMeshButtonClick = () => {
-		if (displayMesh) setDisplayMesh(false);
-		else setDisplayMesh(true);
+		if (displayMeshToggle) setDisplayMeshToggle(false);
+		else setDisplayMeshToggle(true);
 	};
 
 	return (
 		<div>
 			<h1>KaoJanken</h1>
-			<p>あなたの出した顔: {gesture}</p>
+			<p>あなたの出した顔: {currentGesture}</p>
 			<video
 				className={styles.video}
 				ref={localVideoRef}
-				hidden={displayMesh}
+				hidden={displayMeshToggle}
 				autoPlay
 			>
 				<track kind="captions" default />
@@ -90,7 +86,7 @@ export function KaoJanken(): JSX.Element {
 			<video
 				className={styles.video}
 				ref={remoteVideoRef}
-				hidden={!displayMesh}
+				hidden={!displayMeshToggle}
 				autoPlay
 			>
 				<track kind="captions" default />
@@ -100,7 +96,7 @@ export function KaoJanken(): JSX.Element {
 					start
 				</button>
 				<button type="button" onClick={handleToggleMeshButtonClick}>
-					Face Mesh: {displayMesh ? "on" : "off"}
+					Face Mesh: {displayMeshToggle ? "on" : "off"}
 				</button>
 			</p>
 		</div>
