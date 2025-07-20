@@ -16,13 +16,12 @@ import {
 	useState,
 } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { cameraService } from "../../../core";
+import { cameraService, JankenHand } from "../../../core";
 import chokiImage from "../assets/choki.svg";
 import guImage from "../assets/gu.svg";
 import paImage from "../assets/pa.svg";
 import styles from "./User.module.css";
 import { WebRTCConnection } from "./utils";
-import { JankenHand } from "../../../core";
 
 interface UserProps {
 	ref?: RefObject<KaoJankenUserComponent | null>;
@@ -127,7 +126,7 @@ export function User({
 	};
 
 	return (
-		<div>
+		<div className="flex flex-col gap-4">
 			<h1>You</h1>
 			<div className={styles["janken-field"]}>
 				<video

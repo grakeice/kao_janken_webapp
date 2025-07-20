@@ -4,7 +4,7 @@ import { JankenPlayground } from "./components/JankenPlayground";
 
 function App(): JSX.Element {
 	return (
-		<div>
+		<div className="flex h-screen w-full items-center justify-center">
 			<JankenPlayground />
 		</div>
 	);

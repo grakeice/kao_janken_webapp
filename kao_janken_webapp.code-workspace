@@ -8,6 +8,12 @@
 		"editor.defaultFormatter": "biomejs.biome",
 		"[python]": {
 			"editor.defaultFormatter": "charliermarsh.ruff"
+		},
+		"files.associations": {
+			"*.css": "tailwindcss"
+		},
+		"[tailwindcss]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
 		}
 	}
 }

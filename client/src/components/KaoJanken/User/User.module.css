@@ -5,9 +5,10 @@
  * https://opensource.org/licenses/MIT
  */
 
+@import "tailwindcss";
+
 .video {
-	width: 20rem;
-	height: 20rem;
+	@apply w-80 h-80 rounded-4xl;
 	transform: scaleX(-1);
 }
 

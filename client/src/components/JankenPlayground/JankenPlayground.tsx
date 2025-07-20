@@ -8,7 +8,6 @@
 import { type JSX, useRef, useState } from "react";
 import { JankenHand } from "../../core";
 import { KaoJanken, type KaoJankenUserComponent } from "../KaoJanken";
-import styles from "./JankenPlayground.module.css";
 
 export function JankenPlayground(): JSX.Element {
 	const [playing, setPlaying] = useState(false);
@@ -24,9 +23,9 @@ export function JankenPlayground(): JSX.Element {
 	};
 
 	return (
-		<div className={styles.container}>
+		<div className="flex size-4 h-fit w-fit flex-col items-center gap-4 rounded-4xl border-6 border-base-300 p-10 text-center">
 			<h1>KaoJanken</h1>
-			<div className={styles.playground}>
+			<div className="container flex flex-row justify-around gap-4">
 				<KaoJanken.User
 					ref={kaoJankenUserRef}
 					currentGesture={currentUserGesture}
@@ -40,6 +39,7 @@ export function JankenPlayground(): JSX.Element {
 					type="button"
 					onClick={handleStartButtonClick}
 					disabled={playing}
+					className="btn btn-lg btn-neutral rounded-selector"
 				>
 					start
 				</button>
