@@ -5,8 +5,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-.hand {
-	width: 20rem;
-	height: 20rem;
-	background-color: #f0f0f010;
+.hand-image {
+	width: 15rem;
+	height: 15rem;
 }

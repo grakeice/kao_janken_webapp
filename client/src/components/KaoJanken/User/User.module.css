@@ -6,9 +6,10 @@
  */
 
 @import "tailwindcss";
+@plugin "daisyui";
 
 .video {
-	@apply w-80 h-80 rounded-4xl;
+	@apply w-80 h-80 mask mask-squircle;
 	transform: scaleX(-1);
 }
 
