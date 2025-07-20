@@ -5,6 +5,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { KaoJanken, type KaoJankenUserComponent } from "./KaoJanken";
+import { type KaoJankenUserComponent, User } from "./User";
 
-export { KaoJanken, type KaoJankenUserComponent };
+export { User, type KaoJankenUserComponent };

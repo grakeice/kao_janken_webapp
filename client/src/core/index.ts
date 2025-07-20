@@ -6,5 +6,6 @@
  */
 
 import { cameraService } from "./CameraService";
+import { Janken, JankenHand } from "./Janken";
 
-export { cameraService };
+export { cameraService, Janken, JankenHand };

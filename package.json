@@ -9,9 +9,10 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"client": "pnpm --filter client",
-		"sync": "pnpm install; uv sync;",
+		"backend": "uv",
+		"sync": "pnpm install && uv sync;",
 		"start": "pnpx tsx index.ts",
-		"server": "uv run ./backend/main.py"
+		"dev": "pnpm client dev & pnpm backend run ./backend/main.py"
 	},
 	"workspaces": {
 		"packages": [

@@ -1,0 +1,64 @@
+/**
+ * Copyright (c) 2025 grakeice
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.playground {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 2rem;
+	box-sizing: border-box;
+	padding: 1rem;
+	background-image:
+		repeating-linear-gradient(
+			0deg,
+			#333333,
+			#333333 30px,
+			transparent 30px,
+			transparent 46px,
+			#333333 46px
+		),
+		repeating-linear-gradient(
+			90deg,
+			#333333,
+			#333333 30px,
+			transparent 30px,
+			transparent 46px,
+			#333333 46px
+		),
+		repeating-linear-gradient(
+			180deg,
+			#333333,
+			#333333 30px,
+			transparent 30px,
+			transparent 46px,
+			#333333 46px
+		),
+		repeating-linear-gradient(
+			270deg,
+			#333333,
+			#333333 30px,
+			transparent 30px,
+			transparent 46px,
+			#333333 46px
+		);
+	background-size:
+		5px 100%,
+		100% 5px,
+		5px 100%,
+		100% 5px;
+	background-position:
+		0 0,
+		0 0,
+		100% 0,
+		0 100%;
+	background-repeat: no-repeat;
+}

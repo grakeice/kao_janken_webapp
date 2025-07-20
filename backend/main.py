@@ -39,13 +39,13 @@ def estimate_gesture(mouth):
     ) ** 0.5
     ratio = distance_0_17 / distance_78_308
     if ratio < 0.5:
-        janken = "gu"
+        janken = "GU"
     elif ratio > 1.5:
-        janken = "choki"
+        janken = "CHOKI"
     elif 0.5 <= ratio <= 1.5:
-        janken = "pa"
+        janken = "PA"
     else:
-        janken = "unknown"
+        janken = "UNKNOWN"
     put_str = f"distance vertical:{distance_0_17:5.1f}, horizontal:{distance_78_308:5.1f}, ratio:{ratio:4.2f} ({janken})"
     return put_str, janken
 

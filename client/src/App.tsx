@@ -1,11 +1,11 @@
 import type { JSX } from "react";
 import "./App.css";
-import { KaoJanken } from "./components/KaoJanken";
+import { JankenPlayground } from "./components/JankenPlayground";
 
 function App(): JSX.Element {
 	return (
 		<div>
-			<KaoJanken></KaoJanken>
+			<JankenPlayground />
 		</div>
 	);
 }
