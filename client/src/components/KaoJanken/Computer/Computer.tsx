@@ -37,11 +37,10 @@ export function Computer({ currentGesture }: ComputerProps): JSX.Element {
 	};
 	return (
 		<div className="flex flex-col items-center justify-between">
-			<h1>computer</h1>
+			<h1 className="h-12">computer</h1>
 			<div
+				className="h-80 w-80"
 				style={{
-					width: "20rem",
-					height: "20rem",
 					display: "flex",
 					alignItems: "center",
 					justifyContent: "center",
@@ -49,7 +48,9 @@ export function Computer({ currentGesture }: ComputerProps): JSX.Element {
 			>
 				{renderComputerHandImage()}
 			</div>
-			<button type="button" style={{ visibility: "hidden" }}></button>
+			<div className="h-12">
+				<button type="button" style={{ visibility: "hidden" }}></button>
+			</div>
 		</div>
 	);
 }

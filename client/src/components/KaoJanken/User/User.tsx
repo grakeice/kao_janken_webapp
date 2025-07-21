@@ -127,8 +127,8 @@ export function User({
 
 	return (
 		<div className="flex flex-col gap-4">
-			<h1>You</h1>
-			<div className={styles["janken-field"]}>
+			<h1 className="h-12">You</h1>
+			<div className={`${styles["janken-field"]} h-80`}>
 				<video
 					className={styles.video}
 					ref={localVideoRef}
@@ -160,11 +160,11 @@ export function User({
 					)}
 				</AnimatePresence>
 			</div>
-			<p>
+			<div className="h-12">
 				<button type="button" onClick={handleToggleMeshButtonClick}>
 					Face Mesh: {displayMeshToggle ? "on" : "off"}
 				</button>
-			</p>
+			</div>
 		</div>
 	);
 }
