@@ -11,6 +11,7 @@ import { logger } from "hono/logger";
 import "zx/globals";
 import "dotenv/config";
 import { serveStatic } from "@hono/node-server/serve-static";
+import { compress } from "hono/compress";
 
 console.log("---");
 await $`pnpm client build`.verbose();
@@ -23,6 +24,7 @@ const PORT = Number(process.env.CLIENT_PORT || "3000");
 
 const app = new Hono();
 app.use(logger());
+app.use(compress());
 
 app.get("*", serveStatic({ root: "./client/dist/" }));
 

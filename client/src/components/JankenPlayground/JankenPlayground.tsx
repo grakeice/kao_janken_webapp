@@ -31,9 +31,8 @@ export function JankenPlayground(): JSX.Element {
 				setCurrentComputerGesture(JankenHand.UNKNOWN);
 				return;
 			}
-			//0から3までのランダムな整数を生成する
 			const randomGesture = [JankenHand.GU, JankenHand.CHOKI, JankenHand.PA][
-				Math.floor(Math.random() * 2)
+				Math.floor(Math.random() * 3)
 			];
 			setCurrentComputerGesture(randomGesture);
 			const user = new Janken(currentUserGesture);
