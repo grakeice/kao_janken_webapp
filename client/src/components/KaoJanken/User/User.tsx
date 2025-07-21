@@ -16,7 +16,7 @@ import {
 	useState,
 } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { cameraService, JankenHand } from "../../../core";
+import { cameraService, JankenHand } from "@/core";
 import chokiImage from "../assets/choki.svg";
 import guImage from "../assets/gu.svg";
 import paImage from "../assets/pa.svg";

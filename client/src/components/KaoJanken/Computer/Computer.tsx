@@ -16,9 +16,7 @@ interface ComputerProps {
 	currentGesture: JankenHand;
 	setCurrentGesture: Dispatch<SetStateAction<JankenHand>>;
 }
-export function Computer({
-	currentGesture
-}: ComputerProps): JSX.Element {
+export function Computer({ currentGesture }: ComputerProps): JSX.Element {
 	const renderComputerHandImage = () => {
 		switch (currentGesture) {
 			case JankenHand.GU:

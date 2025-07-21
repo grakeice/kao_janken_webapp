@@ -5,8 +5,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-@import "tailwindcss";
-@plugin "daisyui";
+@reference "@/index.css";
 
 .video {
 	@apply w-80 h-80 mask mask-squircle;
@@ -30,4 +29,4 @@
 	width: 10rem;
 	height: 10rem;
 	margin: 0.5rem;
-}
+} 

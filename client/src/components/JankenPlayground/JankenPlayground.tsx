@@ -27,7 +27,7 @@ export function JankenPlayground(): JSX.Element {
 
 	useDebounce(
 		() => {
-			if(currentUserGesture === JankenHand.UNKNOWN){
+			if (currentUserGesture === JankenHand.UNKNOWN) {
 				setCurrentComputerGesture(JankenHand.UNKNOWN);
 				return;
 			}
@@ -45,7 +45,7 @@ export function JankenPlayground(): JSX.Element {
 	);
 
 	return (
-		<div className="flex size-4 h-fit w-fit flex-col items-center gap-4 rounded-4xl border-6 border-base-300 p-10 text-center">
+		<div className="flex size-4 h-fit w-fit flex-col items-center gap-4 rounded-box border-6 border-base-300 p-10 text-center">
 			<h1>KaoJanken</h1>
 			<div className="container flex flex-row justify-around gap-4">
 				<KaoJanken.User
@@ -64,7 +64,6 @@ export function JankenPlayground(): JSX.Element {
 					type="button"
 					onClick={handleStartButtonClick}
 					disabled={playing}
-					className="btn btn-lg btn-neutral rounded-selector"
 				>
 					start
 				</button>

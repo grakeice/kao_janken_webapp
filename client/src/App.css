@@ -1,9 +1,8 @@
-@import "tailwindcss";
-@plugin "daisyui";
+@reference "./index.css";
 
 h1 {
 	@apply font-bold text-4xl text-base-content;
 }
 button {
-	@apply btn btn-neutral rounded-selector;
+	@apply btn rounded-field;
 }
