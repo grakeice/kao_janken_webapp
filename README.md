@@ -6,7 +6,7 @@
 
 ## 依存関係
 
--   コンピューターに`mise`がインストールされている必要があります
+-   コンピューターに[`mise`](https://mise.jdx.dev/)がインストールされている必要があります
 
 ## はじめに
 
@@ -21,7 +21,7 @@ mise run sync
 以下を実行してください
 
 ```sh
-mise start
+mise run start
 ```
 
 > [!tip]

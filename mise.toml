@@ -5,10 +5,7 @@ python = "3.12"
 uv = "latest"
 
 [tasks.sync]
-run = [
-	"mise install",
-	"pnpm sync"
-]
+run = ["mise install", "pnpm sync"]
 
 [tasks.client]
 run = "pnpm ---filter client"
