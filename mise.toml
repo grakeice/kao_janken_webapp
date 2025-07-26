@@ -1,0 +1,23 @@
+[tools]
+node = "22"
+pnpm = "latest"
+python = "3.12"
+uv = "latest"
+
+[tasks.sync]
+run = [
+	"mise install",
+	"pnpm sync"
+]
+
+[tasks.client]
+run = "pnpm ---filter client"
+
+[tasks.backend]
+run = "uv"
+
+[tasks.start]
+run = "pnpx tsx index.ts"
+
+[tasks.dev]
+run = "pnpm dev"
