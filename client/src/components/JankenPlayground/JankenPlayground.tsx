@@ -40,6 +40,7 @@ export function JankenPlayground(): JSX.Element {
 
 	useDebounce(
 		async () => {
+			if (!playingFlag) return;
 			const user = new Janken(currentUserGesture);
 			const computer = new Janken(currentComputerGesture);
 			kaoJankenModalRef.current?.show(user.examine(computer));
