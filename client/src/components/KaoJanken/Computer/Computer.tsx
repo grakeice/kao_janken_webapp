@@ -12,10 +12,10 @@ import {
 	type SetStateAction,
 	useImperativeHandle,
 } from "react";
+import chokiImage from "@/assets/choki_background.svg";
+import guImage from "@/assets/gu_background.svg";
+import paImage from "@/assets/pa_background.svg";
 import { Janken, JankenHand } from "@/core";
-import chokiImage from "../assets/choki_background.svg";
-import guImage from "../assets/gu_background.svg";
-import paImage from "../assets/pa_background.svg";
 import styles from "./Computer.module.css";
 
 export interface KaoJankenComputerComponent {

@@ -62,7 +62,6 @@ class VideoTransformTrack(MediaStreamTrack):
         super().__init__()
         self.track = track
         self.detector = FaceLandMarks()
-        self.data_channel = data_channel  # 追加
         # じゃんけん結果をグローバルで保持
         global latest_janken_result
 

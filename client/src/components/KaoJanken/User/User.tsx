@@ -16,10 +16,10 @@ import {
 	useState,
 } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import chokiImage from "@/assets/choki.svg";
+import guImage from "@/assets/gu.svg";
+import paImage from "@/assets/pa.svg";
 import { cameraService, JankenHand } from "@/core";
-import chokiImage from "../assets/choki.svg";
-import guImage from "../assets/gu.svg";
-import paImage from "../assets/pa.svg";
 import styles from "./User.module.css";
 import { WebRTCConnection } from "./utils";
 
