@@ -1,0 +1,15 @@
+@reference "@/index.css";
+
+.modal {
+	@apply glass;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 80%;
+	max-width: 30rem;
+	padding: 2rem;
+	border-radius: var(--radius-field);
+	text-align: center;
+	z-index: 1000;
+}

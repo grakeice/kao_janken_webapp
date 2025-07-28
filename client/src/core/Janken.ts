@@ -12,9 +12,11 @@ export enum JankenHand {
 	UNKNOWN,
 }
 
+export type JankenResult = "win" | "lose" | "draw" | "fail";
+
 interface IJanken {
 	hand: JankenHand;
-	examine(opponent: Janken): "win" | "lose" | "draw" | "fail";
+	examine(opponent: Janken): JankenResult;
 }
 
 export class Janken implements IJanken {
@@ -44,5 +46,11 @@ export class Janken implements IJanken {
 			case JankenHand.UNKNOWN:
 				return "fail";
 		}
+	}
+
+	static getRandomGesture() {
+		return [JankenHand.GU, JankenHand.CHOKI, JankenHand.PA][
+			Math.floor(Math.random() * 3)
+		];
 	}
 }

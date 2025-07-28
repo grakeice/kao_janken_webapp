@@ -5,6 +5,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { Computer, type KaoJankenComputerComponent } from "./Computer";
-
-export { Computer, type KaoJankenComputerComponent };
+export async function sleep(t: number) {
+	return new Promise((r) => setTimeout(r, t));
+}

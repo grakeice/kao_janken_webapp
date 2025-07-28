@@ -5,6 +5,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { Computer, type KaoJankenComputerComponent } from "./Computer";
+import { sleep } from "./sleep";
 
-export { Computer, type KaoJankenComputerComponent };
+export { sleep };

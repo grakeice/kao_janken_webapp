@@ -6,6 +6,6 @@
  */
 
 import { cameraService } from "./CameraService";
-import { Janken, JankenHand } from "./Janken";
+import { Janken, JankenHand, type JankenResult } from "./Janken";
 
-export { cameraService, Janken, JankenHand };
+export { cameraService, Janken, JankenHand, type JankenResult };

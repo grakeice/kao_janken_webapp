@@ -5,6 +5,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { Computer, type KaoJankenComputerComponent } from "./Computer";
+import { type KaoJankenModalComponent, Modal } from "./Modal";
 
-export { Computer, type KaoJankenComputerComponent };
+export { Modal, type KaoJankenModalComponent };

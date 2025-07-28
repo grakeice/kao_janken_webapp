@@ -31,6 +31,7 @@ interface UserProps {
 
 export interface KaoJankenUserComponent {
 	start(): Promise<void>;
+	pause(): void;
 }
 
 export function User({
@@ -38,7 +39,7 @@ export function User({
 	currentGesture,
 	setCurrentGesture,
 }: UserProps): JSX.Element {
-	const pc = new RTCPeerConnection();
+	const pc = useRef(new RTCPeerConnection());
 	const apiHost = String(import.meta.env.VITE_API_HOST || "127.0.0.1");
 	const apiPort = Number(import.meta.env.VITE_API_PORT || "8080");
 
@@ -47,9 +48,16 @@ export function User({
 	const localVideoRef = useRef<HTMLVideoElement>(null);
 	const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
+	const [paused, setPaused] = useState(false);
+	const initial = useRef(true);
+
 	useImperativeHandle(ref, () => {
 		return {
 			async start() {
+				setPaused(false);
+				if (!initial.current) return;
+				initial.current = false;
+
 				const stream = await cameraService.start({
 					video: {
 						width: 1080,
@@ -59,7 +67,7 @@ export function User({
 				});
 
 				const rtcConnection = new WebRTCConnection({
-					pc,
+					pc: pc.current,
 					stream,
 					remoteVideoDisplayTarget: remoteVideoRef.current,
 					apiUrl: `http://${apiHost}:${apiPort}/kaojanken`,
@@ -84,7 +92,11 @@ export function User({
 					};
 
 					try {
-						setCurrentGesture(JankenHand[data.results[0].gesture]);
+						if (!paused) {
+							setCurrentGesture(JankenHand[data.results[0].gesture]);
+						} else {
+							setCurrentGesture(JankenHand.UNKNOWN);
+						}
 					} catch {
 						setCurrentGesture(JankenHand.UNKNOWN);
 					}
@@ -97,6 +109,9 @@ export function User({
 				socket.addEventListener("close", () => {
 					clearInterval(interval);
 				});
+			},
+			pause() {
+				setPaused(true);
 			},
 		};
 	});

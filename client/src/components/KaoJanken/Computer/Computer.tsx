@@ -5,18 +5,45 @@
  * https://opensource.org/licenses/MIT
  */
 
-import type { Dispatch, JSX, SetStateAction } from "react";
-import { JankenHand } from "../../../core";
+import {
+	type Dispatch,
+	type JSX,
+	type RefObject,
+	type SetStateAction,
+	useImperativeHandle,
+} from "react";
+import { Janken, JankenHand } from "@/core";
 import chokiImage from "../assets/choki_background.svg";
 import guImage from "../assets/gu_background.svg";
 import paImage from "../assets/pa_background.svg";
 import styles from "./Computer.module.css";
 
+export interface KaoJankenComputerComponent {
+	start(): void;
+	stop(): void;
+}
+
 interface ComputerProps {
 	currentGesture: JankenHand;
 	setCurrentGesture: Dispatch<SetStateAction<JankenHand>>;
+	ref?: RefObject<KaoJankenComputerComponent | null>;
 }
-export function Computer({ currentGesture }: ComputerProps): JSX.Element {
+export function Computer({
+	ref,
+	currentGesture,
+	setCurrentGesture,
+}: ComputerProps): JSX.Element {
+	useImperativeHandle(ref, () => {
+		return {
+			start() {
+				setCurrentGesture(Janken.getRandomGesture());
+			},
+			stop() {
+				setCurrentGesture(JankenHand.UNKNOWN);
+			},
+		};
+	});
+
 	const renderComputerHandImage = () => {
 		switch (currentGesture) {
 			case JankenHand.GU:
@@ -37,7 +64,7 @@ export function Computer({ currentGesture }: ComputerProps): JSX.Element {
 	};
 	return (
 		<div className="flex flex-col items-center justify-between">
-			<h1 className="h-12">computer</h1>
+			<h1 className="h-12">Computer</h1>
 			<div
 				className="h-80 w-80"
 				style={{
