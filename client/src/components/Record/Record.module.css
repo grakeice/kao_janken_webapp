@@ -1,0 +1,11 @@
+@reference "@/index.css";
+
+.record{
+	@apply border-b-6 border-base-300 border-dashed pb-10 font-bold text-xl;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-evenly;
+	align-items: center;
+	box-sizing: border-box;
+}
