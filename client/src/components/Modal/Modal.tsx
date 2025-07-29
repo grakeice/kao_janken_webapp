@@ -48,7 +48,7 @@ export function Modal({ ref }: ModalProps): JSX.Element {
 				switch (result) {
 					case "win":
 						setMessage("You win!");
-						await sleep(500);
+						await sleep(200);
 						confetti({
 							zIndex: 5,
 							gravity: 5.5,
