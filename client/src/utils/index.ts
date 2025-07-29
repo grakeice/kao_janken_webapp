@@ -5,6 +5,7 @@
  * https://opensource.org/licenses/MIT
  */
 
+import { getRandomInt } from "./random";
 import { sleep } from "./sleep";
 
-export { sleep };
+export { sleep, getRandomInt };

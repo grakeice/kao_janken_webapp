@@ -1,15 +1,20 @@
 @reference "@/index.css";
 
 .modal {
-	@apply glass;
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 80%;
-	max-width: 30rem;
-	padding: 2rem;
-	border-radius: var(--radius-field);
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	text-align: center;
-	z-index: 1000;
+	z-index: 1;
+	backdrop-filter: blur(10px);
+}
+
+.message {
+	white-space: nowrap;
+	font-size: 20rem;
 }

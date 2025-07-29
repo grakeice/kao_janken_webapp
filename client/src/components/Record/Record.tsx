@@ -16,8 +16,6 @@ interface RecordProps {
 }
 
 export function Record({ wins, loses, draws }: RecordProps): JSX.Element {
-	console.log(![wins, loses, draws].every((v) => v === 0));
-
 	return (
 		<AnimatePresence>
 			{![wins, loses, draws].every((v) => v === 0) && (

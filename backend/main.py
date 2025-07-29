@@ -15,7 +15,7 @@ from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from dotenv import load_dotenv
 from face_mesh import FaceLandMarks
-import numpy as np
+# import numpy as np
 
 load_dotenv()
 
@@ -74,7 +74,6 @@ class VideoTransformTrack(MediaStreamTrack):
         img = frame.to_ndarray(format="bgr24")
         janken_statuses = []
         # --- ここでOpenCVを使った画像処理を行う ---
-        self.detector.find_face_keypoints(img)
         self.detector.find_face_keypoints(img)
         for face in self.detector.faces:
             janken_statuses.append(estimate_gesture(face))
