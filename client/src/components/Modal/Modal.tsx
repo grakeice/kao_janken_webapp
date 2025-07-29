@@ -18,7 +18,7 @@ import {
 	useState,
 } from "react";
 import type { JankenResult } from "@/core";
-import { getRandomInt } from "@/utils";
+import { getRandomInt, sleep } from "@/utils";
 import styles from "./Modal.module.css";
 
 interface ModalProps {
@@ -39,7 +39,7 @@ export function Modal({ ref }: ModalProps): JSX.Element {
 
 	useImperativeHandle(ref, () => {
 		return {
-			show(result) {
+			async show(result) {
 				backgroundColor.current = globalThis.matchMedia(
 					"(prefers-color-scheme: light)",
 				).matches
@@ -48,11 +48,12 @@ export function Modal({ ref }: ModalProps): JSX.Element {
 				switch (result) {
 					case "win":
 						setMessage("You win!");
+						await sleep(500);
 						confetti({
 							zIndex: 5,
-							gravity: 6,
+							gravity: 5.5,
 							particleCount: 200,
-							startVelocity: 125,
+							startVelocity: 120,
 							spread: 90,
 							scalar: 1.5,
 							origin: { y: 0.8 },
