@@ -50,9 +50,9 @@ export function Modal({ ref }: ModalProps): JSX.Element {
 						setMessage("You win!");
 						confetti({
 							zIndex: 5,
-							gravity: 7,
+							gravity: 6,
 							particleCount: 200,
-							startVelocity: 150,
+							startVelocity: 125,
 							spread: 90,
 							scalar: 1.5,
 							origin: { y: 0.8 },
