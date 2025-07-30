@@ -10,6 +10,9 @@
 .video {
 	@apply w-80 h-80 mask mask-squircle;
 	transform: scaleX(-1);
+	@media (max-width: 1100px) {
+		@apply w-40;
+	}
 }
 
 .janken-field {
@@ -29,4 +32,4 @@
 	width: 10rem;
 	height: 10rem;
 	margin: 0.5rem;
-} 
+}
