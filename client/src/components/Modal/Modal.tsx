@@ -83,7 +83,7 @@ export function Modal({ ref }: ModalProps): JSX.Element {
 			gsap.to(target, {
 				keyframes: {
 					"0%": { x: "120vw", skewX: "-45deg" },
-					"50%": { skewX: 0 },
+					"50%": { skewX: "-7deg" },
 					"100%": { x: "-120vw", skewX: "-45deg" },
 				},
 				duration: 2.0,
