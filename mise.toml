@@ -14,7 +14,7 @@ run = "pnpm ---filter client"
 run = "uv"
 
 [tasks.start]
-run = "pnpx tsx index.ts"
+run = "pnpm dlx tsx index.ts"
 
 [tasks.dev]
 run = "pnpm dev"
