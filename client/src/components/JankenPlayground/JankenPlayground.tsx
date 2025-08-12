@@ -6,7 +6,9 @@
  */
 
 import { type JSX, useEffect, useRef, useState } from "react";
+
 import { useDebounce } from "react-use";
+
 import { Janken, JankenHand } from "@/core";
 import { sleep } from "@/utils";
 import { KaoJanken, type KaoJankenUserComponent } from "../KaoJanken";

@@ -5,8 +5,10 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { AnimatePresence, motion } from "motion/react";
 import type { JSX } from "react";
+
+import { AnimatePresence, motion } from "motion/react";
+
 import styles from "./Record.module.css";
 
 interface RecordProps {

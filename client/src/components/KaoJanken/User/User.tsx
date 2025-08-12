@@ -5,7 +5,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { AnimatePresence, motion } from "motion/react";
 import {
 	type Dispatch,
 	type JSX,
@@ -15,7 +14,10 @@ import {
 	useRef,
 	useState,
 } from "react";
+
+import { AnimatePresence, motion } from "motion/react";
 import { FaArrowRightLong } from "react-icons/fa6";
+
 import chokiImage from "@/assets/choki.svg";
 import guImage from "@/assets/gu.svg";
 import paImage from "@/assets/pa.svg";

@@ -5,11 +5,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { useGSAP } from "@gsap/react";
-import confetti from "canvas-confetti";
-import { gsap } from "gsap";
-import { SlowMo } from "gsap/EasePack";
-import { AnimatePresence, motion } from "motion/react";
 import {
 	type JSX,
 	type RefObject,
@@ -17,6 +12,13 @@ import {
 	useRef,
 	useState,
 } from "react";
+
+import confetti from "canvas-confetti";
+import { gsap } from "gsap";
+import { SlowMo } from "gsap/EasePack";
+import { AnimatePresence, motion } from "motion/react";
+import { useGSAP } from "@gsap/react";
+
 import type { JankenResult } from "@/core";
 import { getRandomInt, sleep } from "@/utils";
 import styles from "./Modal.module.css";
